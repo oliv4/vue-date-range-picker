@@ -1,6 +1,6 @@
 {
-  "name": "@owumaro/vue-date-range-picker",
-  "version": "0.1.0",
+  "name": "@oliv4/vue-date-range-picker",
+  "version": "0.1.1",
   "description": "A date range picker",
   "author": "Owumaro",
   "main": "dist/vue-date-range-picker.js",
@@ -31,7 +31,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Owumaro/vue-date-range-picker.git"
+    "url": "git://github.com/oliv4/vue-date-range-picker.git"
   },
   "license": "MIT",
   "eslintConfig": {
