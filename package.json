@@ -4,6 +4,7 @@
   "description": "A date range picker",
   "author": "Owumaro",
   "main": "dist/vue-date-range-picker.js",
+  "module": "dist/vue-date-range-picker.umd.js",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build --target lib --name vue-date-range-picker src/components/DateRangePicker.vue",
