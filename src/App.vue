@@ -40,16 +40,16 @@ import moment from 'moment'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faCalendarAlt, faCaretDown } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import BModal from 'bootstrap-vue/es/components/modal/modal'
-import BModalDirective from 'bootstrap-vue/es/directives/modal/modal'
-import BPopover from 'bootstrap-vue/es/components/popover/popover'
+import { BModal } from 'bootstrap-vue/esm/components/modal/modal'
+import { VBModal } from 'bootstrap-vue/esm/directives/modal/modal'
+import { BPopover } from 'bootstrap-vue/esm/components/popover/popover'
 import DateRangePicker from './components/DateRangePicker'
 
 library.add(faCalendarAlt, faCaretDown)
 
 export default {
   components: { DateRangePicker, FontAwesomeIcon, BModal, BPopover },
-  directives: { 'b-modal': BModalDirective },
+  directives: { 'b-modal': VBModal },
   data: () => {
     return {
       startDate: moment.utc().subtract(1, 'month').startOf('month'),
