@@ -12,6 +12,7 @@
         :startDateCompare="startDateCompare"
         :endDateCompare="endDateCompare"
         :step="step"
+        :locale="locale"
         v-on:goToPrevMonth="goToPrevMonth"
         v-on:goToNextMonth="goToNextMonth"
         v-on:selectDate="selectDate"
