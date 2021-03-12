@@ -37,13 +37,13 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 library.add(faCaretLeft, faCaretRight)
 
 export default {
-  props: ['calendarIndex', 'calendarCount', 'month', 'startDate', 'endDate', 'compare', 'startDateCompare', 'endDateCompare', 'step'],
+  props: ['calendarIndex', 'calendarCount', 'month', 'startDate', 'endDate', 'compare', 'startDateCompare', 'endDateCompare', 'step', 'locale'],
   data: () => {
     return {}
   },
   computed: {
     displayMonth: function() {
-      return moment.utc(this.month).add(this.calendarIndex - 1, 'month')
+      return moment.utc(this.month).add(this.calendarIndex - 1, 'month').locale(this.locale)
     },
     days: function() {
       let startDay = moment.utc(this.displayMonth).startOf('isoWeek')
