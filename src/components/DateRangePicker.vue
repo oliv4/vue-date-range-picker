@@ -24,7 +24,7 @@
       <div class="form-group">
         <select class="custom-select" :class="compare ? 'daterangepicker-range-border' : ''" v-model="rangeSelect">
           <option v-for="(range, rangeKey) in ranges" :key="rangeKey" :value="rangeKey">{{ range.label }}</option>
-          <option value="custom">Custom range</option>
+          <option value="custom">{{language[locale].customRange}}</option>
         </select>
       </div>
       <div class="form-group form-inline flex-nowrap">
@@ -45,14 +45,14 @@
       <div class="form-group" v-if="allowCompare">
         <div class="custom-control custom-checkbox">
           <input type="checkbox" class="custom-control-input" :id="'date-range-picker-compare-' + _uid" v-model="compare">
-          <label class="custom-control-label" :for="'date-range-picker-compare-' + _uid">Compare</label>
+          <label class="custom-control-label" :for="'date-range-picker-compare-' + _uid">{{language[locale].compare}}</label>
         </div>
       </div>
       <div v-if="compare">
         <div class="form-group">
           <select class="custom-select" :class="compare ? 'daterangepicker-range-border compare' : ''" v-model="rangeSelectCompare">
             <option v-for="(range, rangeKey) in ranges" :key="rangeKey" :value="rangeKey">{{ range.label }}</option>
-            <option value="custom">Custom range</option>
+            <option value="custom">{{language[locale].customRange}}</option>
           </select>
         </div>
         <div class="form-group form-inline flex-nowrap">
@@ -74,8 +74,8 @@
         </div>
       </div>
       <div class="form-group form-inline justify-content-end mb-0">
-        <button type="button" class="btn btn-light" @click="cancel">Cancel</button>
-        <button type="button" class="btn btn-primary ml-2" :disabled="step != null" @click="submit">Submit</button>
+        <button type="button" class="btn btn-light" @click="cancel">{{language[locale].cancel}}</button>
+        <button type="button" class="btn btn-primary ml-2" :disabled="step != null" @click="submit">{{language[locale].submit}}</button>
       </div>
     </div>
   </div>
@@ -92,6 +92,33 @@ library.add(faCaretRight)
 
 export default {
   props: {
+    locale: {
+      type: String,
+      default: 'pt'
+    },
+    language: {
+      type: Object,
+      default: function() {
+        return {
+          en: {
+            compare: 'Compare',
+            currentMonth: 'Current month',
+            lastMonth: 'Last month',
+            customRange: 'Custom range',
+            cancel: 'Cancel',
+            submit: 'Submit'
+          },
+          pt: {
+            compare: 'Comparar',
+            currentMonth: 'Mês atual',
+            lastMonth: 'Mês anterior',
+            customRange: 'Período customizado',
+            cancel: 'Cancelar',
+            submit: 'Confirmar'
+          }
+        }
+      }
+    },
     calendarCount: {
       type: Number,
       default: 2
@@ -105,12 +132,12 @@ export default {
       default: function() {
         return {
           currentMonth: {
-            label: 'Current month',
+            label: this.language[this.locale].currentMonth,
             startDate: moment.utc().startOf('month'),
             endDate: moment.utc().endOf('month').startOf('day')
           },
           lastMonth: {
-            label: 'Last month',
+            label: this.language[this.locale].lastMonth,
             startDate: moment.utc().subtract(1, 'month').startOf('month'),
             endDate: moment.utc().subtract(1, 'month').endOf('month').startOf('day')
           }
