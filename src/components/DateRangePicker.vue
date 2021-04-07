@@ -31,7 +31,7 @@
       <div class="form-group form-inline flex-nowrap">
         <input type="text" class="form-control w-100 daterangepicker-date-input"
           ref="startDate"
-          :value="startDate | dateFormat"
+          :value="startDate | dateFormat(this.language[locale].format)"
           @focus="step = 'selectStartDate'" @blur="inputDate"
         >
         <span class="mx-2">
@@ -39,7 +39,7 @@
         </span>
         <input type="text" class="form-control w-100 daterangepicker-date-input"
           ref="endDate"
-          :value="endDate | dateFormat"
+          :value="endDate | dateFormat(this.language[locale].format)"
           @focus="step = 'selectEndDate'" @blur="inputDate"
         >
       </div>
@@ -59,7 +59,7 @@
         <div class="form-group form-inline flex-nowrap">
           <input type="text" class="form-control w-100 daterangepicker-date-input compare"
             ref="startDateCompare"
-            :value="startDateCompare | dateFormat"
+            :value="startDateCompare | dateFormat(this.language[locale].format)"
             @focus="step = 'selectStartDateCompare'" @blur="inputDate"
             @keyup.enter="inputDate"
           >
@@ -68,7 +68,7 @@
           </span>
           <input type="text" class="form-control w-100 daterangepicker-date-input compare"
             ref="endDateCompare"
-            :value="endDateCompare | dateFormat"
+            :value="endDateCompare | dateFormat(this.language[locale].format)"
             @focus="step = 'selectEndDateCompare'" @blur="inputDate"
             @keyup.enter="inputDate"
           >
@@ -107,7 +107,8 @@ export default {
             lastMonth: 'Last month',
             customRange: 'Custom range',
             cancel: 'Cancel',
-            submit: 'Submit'
+            submit: 'Submit',
+            format: 'YYYY-MM-DD'
           },
           pt: {
             compare: 'Comparar',
@@ -115,7 +116,8 @@ export default {
             lastMonth: 'Mês anterior',
             customRange: 'Período customizado',
             cancel: 'Cancelar',
-            submit: 'Confirmar'
+            submit: 'Confirmar',
+            format: 'DD-MM-YYYY'
           }
         }
       }
@@ -263,7 +265,7 @@ export default {
     },
     // Try to update the step date from an input value
     inputDate: function(input) {
-      let date = moment.utc(input.target.value, 'YYYY-MM-DD')
+      let date = moment.utc(input.target.value, this.language[this.locale].format)
       if (date.isValid()) {
         this.selectDate(date)
       }
@@ -335,8 +337,8 @@ export default {
     }
   },
   filters: {
-    dateFormat: function(value) {
-      return value ? value.format('YYYY-MM-DD') : ''
+    dateFormat: function(value, format) {
+      return value ? value.format(format) : ''
     }
   },
   created: function() {
