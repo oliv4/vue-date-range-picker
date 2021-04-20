@@ -76,7 +76,7 @@
       </div>
       <div class="form-group form-inline justify-content-end mb-0">
         <button type="button" class="btn btn-light" @click="cancel">{{language[locale].cancel}}</button>
-        <button type="button" class="btn btn-primary ml-2" :disabled="step != null" @click="submit">{{language[locale].submit}}</button>
+        <button type="button" class="btn btn-primary ml-2" :disabled="!isRangeValid" @click="submit">{{language[locale].submit}}</button>
       </div>
     </div>
   </div>
@@ -166,7 +166,7 @@ export default {
       rangeSelectCompare: null,
       compare: false,
       month: moment.utc().subtract(1, 'month').startOf('month'),
-      step: null
+      step: 'selectStartDate'
     }
   },
   computed: {
@@ -182,6 +182,18 @@ export default {
     }
   },
   methods: {
+    isRangeValid() {
+      let valid = false
+
+      if (moment.isMoment(this.startDate) && moment.isMoment(this.endDate)) {
+        valid = true
+        if (this.allowCompare && this.compare) {
+          valid = moment.isMoment(this.startDateCompare) && moment.isMoment(this.endDateCompare)
+        }
+      }
+
+      return valid
+    },
     goToPrevMonth: function() {
       this.month = moment.utc(this.month).subtract(1, 'month')
     },
@@ -206,9 +218,13 @@ export default {
         }
       }
 
+      if (predefinedRange && this.step === 'selectStartDate') {
+        this.$refs.startDate.focus()
+      }
+
       // Custom range
       if (!predefinedRange && this.step == null) {
-        this.step = 'selectStartDate'
+        this.step = null
         this.$refs.startDate.focus()
       }
     },
@@ -269,10 +285,15 @@ export default {
       if (date.isValid()) {
         this.selectDate(date)
       }
-      this.nextStep()
+      // this.nextStep()
     },
     // Submit button
     submit: function() {
+      this.$refs.endDate.blur()
+      if (this.allowCompare && this.compare) {
+        this.$refs.endDateCompare.blur()
+      }
+
       this.$emit('submit', {
         startDate: this.startDate,
         endDate: this.endDate,
